@@ -5,12 +5,12 @@ import { Reflector, Text, useTexture, useGLTF } from '@react-three/drei'
 import Overlay from './Overlay'
 
 function Carla(props) {
-  const { scene } = useGLTF('/carla-draco.glb')
+  const { scene } = useGLTF('carla-draco.glb')
   return <primitive object={scene} {...props} />
 }
 
 function VideoText({ clicked, ...props }) {
-  const [video] = useState(() => Object.assign(document.createElement('video'), { src: '/eddie.mp4', crossOrigin: 'Anonymous', loop: true }))
+  const [video] = useState(() => Object.assign(document.createElement('video'), { src: 'eddie.mp4', crossOrigin: 'Anonymous', loop: true }))
   useEffect(() => void (clicked && video.play()), [video, clicked])
   return (
     <Text font="/Inter-Bold.woff" fontSize={3} letterSpacing={-0.06} {...props}>
@@ -23,7 +23,7 @@ function VideoText({ clicked, ...props }) {
 }
 
 function Ground() {
-  const [floor, normal] = useTexture(['/SurfaceImperfections003_1K_var1.jpg', '/SurfaceImperfections003_1K_Normal.jpg'])
+  const [floor, normal] = useTexture(['SurfaceImperfections003_1K_var1.jpg', 'SurfaceImperfections003_1K_Normal.jpg'])
   return (
     <Reflector blur={[400, 100]} resolution={512} args={[10, 10]} mirror={0.5} mixBlur={6} mixStrength={1.5} rotation={[-Math.PI / 2, 0, Math.PI / 2]}>
       {(Material, props) => <Material color="#a0a0a0" metalness={0.4} roughnessMap={floor} normalMap={normal} normalScale={[2, 2]} {...props} />}
