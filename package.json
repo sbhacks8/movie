@@ -5,6 +5,7 @@
   "keywords": [
     "reflections"
   ],
+  "homepage": "https://ezhang7423.github.io/cards",
   "main": "src/index.js",
   "dependencies": {
     "@pmndrs/branding": "0.0.8",
@@ -22,7 +23,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "predeploy": "npm run build",
+    "predeploy": "npm run build && cp build/index.html build/404.html",
     "deploy": "gh-pages -d build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
