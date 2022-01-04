@@ -10,7 +10,7 @@ function Carla(props) {
 }
 
 function VideoText({ clicked, ...props }) {
-  const [video] = useState(() => Object.assign(document.createElement('video'), { src: 'eddie.mp4', crossOrigin: 'Anonymous', loop: true }))
+  const [video] = useState(() => Object.assign(document.createElement('video'), { src: 'eddie.mp4', crossOrigin: 'Anonymous', loop: false }))
   useEffect(() => void (clicked && video.play()), [video, clicked])
   return (
     <Text font="/Inter-Bold.woff" fontSize={3} letterSpacing={-0.06} {...props}>
