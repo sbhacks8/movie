@@ -5,7 +5,7 @@
   "keywords": [
     "reflections"
   ],
-  "homepage": "https://ezhang7423.github.io/cards",
+  "homepage": "https://ezhang7423.github.io/movie",
   "main": "src/index.js",
   "dependencies": {
     "@pmndrs/branding": "0.0.8",
