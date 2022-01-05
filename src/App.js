@@ -1,6 +1,5 @@
 import * as THREE from 'three'
-import React, { Suspense, useEffect, useState, forwardRef } from 'react'
-import useMuteWithRefCallback from './mute'
+import React, { Suspense, useEffect, useState, useRef, forwardRef } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { Reflector, Text, useTexture, useGLTF } from '@react-three/drei'
 import Overlay from './Overlay'
@@ -12,7 +11,7 @@ function Carla(props) {
 
 const VideoText = forwardRef(({ clicked, ...props }, ref) => {
   const [video] = useState(() => Object.assign(document.createElement('video'), { src: 'eddie.mp4', crossOrigin: 'Anonymous', loop: false }))
-  useEffect(() => void (clicked && video.play()), [video, clicked])
+  video.setAttribute('playsinline', 'playsinline')
   return (
     <Text font="/Inter-Bold.woff" fontSize={3} letterSpacing={-0.06} {...props}>
       eddie
@@ -35,7 +34,7 @@ function Ground() {
 export default function App() {
   const [clicked, setClicked] = useState(false)
   const [ready, setReady] = useState(false)
-  const [ref] = useMuteWithRefCallback()
+  const ref = useRef()
   const store = { clicked, setClicked, ready, setReady }
   return (
     <>
@@ -54,7 +53,7 @@ export default function App() {
           <Intro start={ready && clicked} set={setReady} />
         </Suspense>
       </Canvas>
-      <Overlay {...store} />
+      <Overlay {...store} videoPlayer={ref} />
     </>
   )
 }
