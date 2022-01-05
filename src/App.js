@@ -1,5 +1,6 @@
 import * as THREE from 'three'
-import React, { Suspense, useEffect, useState } from 'react'
+import React, { Suspense, useEffect, useState, forwardRef } from 'react'
+import useMuteWithRefCallback from './mute'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { Reflector, Text, useTexture, useGLTF } from '@react-three/drei'
 import Overlay from './Overlay'
@@ -9,18 +10,18 @@ function Carla(props) {
   return <primitive object={scene} {...props} />
 }
 
-function VideoText({ clicked, ...props }) {
-  const [video] = useState(() => Object.assign(document.createElement('video'), { src: 'eddie.mp4', crossOrigin: 'Anonymous', loop: false, muted: true }))
+const VideoText = forwardRef(({ clicked, ...props }, ref) => {
+  const [video] = useState(() => Object.assign(document.createElement('video'), { src: 'eddie.mp4', crossOrigin: 'Anonymous', loop: false }))
   useEffect(() => void (clicked && video.play()), [video, clicked])
   return (
     <Text font="/Inter-Bold.woff" fontSize={3} letterSpacing={-0.06} {...props}>
       eddie
       <meshBasicMaterial toneMapped={false}>
-        <videoTexture attach="map" args={[video]} encoding={THREE.sRGBEncoding} />
+        <videoTexture attach="map" args={[video]} ref={ref} encoding={THREE.sRGBEncoding} />
       </meshBasicMaterial>
     </Text>
   )
-}
+})
 
 function Ground() {
   const [floor, normal] = useTexture(['SurfaceImperfections003_1K_var1.jpg', 'SurfaceImperfections003_1K_Normal.jpg'])
@@ -34,6 +35,7 @@ function Ground() {
 export default function App() {
   const [clicked, setClicked] = useState(false)
   const [ready, setReady] = useState(false)
+  const [ref] = useMuteWithRefCallback()
   const store = { clicked, setClicked, ready, setReady }
   return (
     <>
@@ -43,7 +45,7 @@ export default function App() {
         <Suspense fallback={null}>
           <group position={[0, -1, 0]}>
             <Carla rotation={[0, Math.PI - 0.4, 0]} position={[-1.2, 0, 0.6]} scale={[0.26, 0.26, 0.26]} />
-            <VideoText {...store} position={[0, 1.3, -2]} />
+            <VideoText {...store} ref={ref} position={[0, 1.3, -2]} />
             <Ground />
           </group>
           <ambientLight intensity={0.5} />
