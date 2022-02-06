@@ -5,7 +5,7 @@ import { Reflector, Text, useTexture, useGLTF } from '@react-three/drei'
 import Overlay from './Overlay'
 
 function Carla(props) {
-  const { scene } = useGLTF('carla-draco.glb')
+  const { scene } = useGLTF('scene.glb')
   return <primitive object={scene} {...props} />
 }
 
@@ -41,11 +41,11 @@ export default function App() {
       <Canvas concurrent gl={{ alpha: false }} pixelRatio={[1, 1.5]} camera={{ position: [0, 3, 100], fov: 15 }}>
         <color attach="background" args={['black']} />
         <fog attach="fog" args={['black', 15, 20]} />
+        
         <Suspense fallback={null}>
           <group position={[0, -1, 0]}>
-            <Carla rotation={[0, Math.PI - 0.4, 0]} position={[-1.2, 0, 0.6]} scale={[0.26, 0.26, 0.26]} />
-            <VideoText {...store} ref={ref} position={[0, 1.3, -2]} />
-            <Ground />
+            <Carla rotation={[0.05, Math.PI -1.0, 0.1]} position={[-1, 4.0, 9.0]} scale={[0.15, 0.15, 0.15]} />
+            {/* <Ground /> */}
           </group>
           <ambientLight intensity={0.5} />
           <spotLight position={[0, 10, 0]} intensity={0.3} />
